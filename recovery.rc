@@ -48,9 +48,9 @@ on early-fs
 
 on fs
     mount tmpfs tmpfs /tmp
-    mount rfs /dev/block/stl9 /system check=no
+    #mount rfs /dev/block/stl9 /system check=no
 
-    exec apply_disk_policy
+    #exec apply_disk_policy
     #mount rfs /dev/block/stl3 /efs nosuid nodev check=no
 on post-fs
 
@@ -73,17 +73,20 @@ on boot
 service ueventd /sbin/ueventd
     critical
 
-#service console /system/bin/sh
-#    console
+service console /system/bin/sh
+    console
 
 #service recovery /sbin/recovery
-service recovery /system/bin/recovery
+#service recovery /system/bin/recovery
+service recovery /sbin/start_recovery
+    console
+    oneshot
 
 service adbd /sbin/adbd recovery
-    disabled
+    enabled
 
-#on property:persist.service.adb.enable=1
-#    start adbd
+on property:persist.service.adb.enable=1
+    start adbd
 
-#on property:persist.service.adb.enable=0
-#    stop adbd
+on property:persist.service.adb.enable=0
+    stop adbd
