@@ -48,7 +48,8 @@ on early-fs
 
 on fs
     mount tmpfs tmpfs /tmp
-    #mount rfs /dev/block/stl9 /system check=no
+    mount rfs /dev/block/stl9 /system check=no
+    mount ext4 /dev/block/stl9 /system wait noatime nosuid nodev
 
     #exec apply_disk_policy
     #mount rfs /dev/block/stl3 /efs nosuid nodev check=no

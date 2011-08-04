@@ -142,12 +142,14 @@ on fs
     #mount yaffs2 mtd@cache /cache nosuid nodev
     mount rfs /dev/block/stl9 /system check=no
     mount rfs /dev/block/stl9 /system remount
-    
+    mount ext4 /dev/block/stl9 /system wait noatime nosuid nodev
+
 # use movinand second partition as /data. d.moskvitin
     exec apply_disk_policy
     
     mkdir /data
     mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
+    mount ext4 /dev/block/mmcblk0p2 /data wait noatime nosuid nodev
     chown system system /data
     chmod 0771 /data    
     
@@ -158,6 +160,7 @@ on fs
     
     mkdir /dbdata
     mount rfs /dev/block/stl10 /dbdata nosuid nodev check=no
+    mount ext4 /dev/block/stl10 /dbdata wait noatime nosuid nodev
     chown system system /dbdata
     chmod 0771 /dbdata
     chmod 0771 /dbdata
@@ -205,6 +208,7 @@ on post-fs
     # Same reason as /data above
     mkdir /cache
     mount rfs /dev/block/mmcblk0p1 /cache nosuid nodev check=no
+    mount ext4 /dev/block/mmcblk0p1 /cache wait noatime nosuid nodev
     chown system cache /cache
     chmod 0770 /cache
 
