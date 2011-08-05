@@ -1,6 +1,6 @@
-#!/sbin/sh
+#!/bin/sh
+# mostly replicate updater-script behavior from CWM as update.zip
 
-cd /sbin
 ln -s busybox /sbin/[
 ln -s busybox /sbin/[[
 ln -s recovery /sbin/amend
@@ -9,7 +9,7 @@ ln -s busybox /sbin/awk
 ln -s busybox /sbin/basename
 ln -s busybox /sbin/bbconfig
 ln -s busybox /sbin/bunzip2
-ln -s recovery /sbin/busybox
+#ln -s recovery /sbin/busybox
 ln -s busybox /sbin/bzcat
 ln -s busybox /sbin/bzip2
 ln -s busybox /sbin/cal
@@ -65,6 +65,7 @@ ln -s busybox /sbin/killall
 ln -s busybox /sbin/killall5
 ln -s busybox /sbin/length
 ln -s busybox /sbin/less
+ln -s busybox /sbin/ln
 ln -s busybox /sbin/losetup
 ln -s busybox /sbin/ls
 ln -s busybox /sbin/lsmod
@@ -83,6 +84,7 @@ ln -s busybox /sbin/mktemp
 ln -s recovery /sbin/mkyaffs2image
 ln -s busybox /sbin/modprobe
 ln -s busybox /sbin/more
+#ln -s busybox /sbin/mount
 ln -s busybox /sbin/mountpoint
 ln -s busybox /sbin/mv
 ln -s recovery /sbin/nandroid
@@ -110,6 +112,7 @@ ln -s busybox /sbin/run-parts
 ln -s busybox /sbin/sed
 ln -s busybox /sbin/seq
 ln -s busybox /sbin/setsid
+ln -s busybox /sbin/sh
 ln -s busybox /sbin/sha1sum
 ln -s busybox /sbin/sha256sum
 ln -s busybox /sbin/sha512sum
@@ -153,9 +156,9 @@ ln -s busybox /sbin/xargs
 ln -s busybox /sbin/yes
 ln -s busybox /sbin/zcat
 
-mv mount.wrapper mount
-chmod 755 mount
+# force the sdcard to mount
+mount -t vfat -o rw,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0002,dmask=0002,allow_utime=0020,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro "`cat /voodoo/run/sdcard_device`" /sdcard
+' > /sbin/postrecoveryboot.sh
 
 # run the actual recovery
-/sbin/recovery &
-
+exec /sbin/recovery
