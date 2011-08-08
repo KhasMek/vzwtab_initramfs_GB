@@ -80,11 +80,11 @@ service ueventd /sbin/ueventd
 service console /system/bin/sh
     console
 
-#service recovery /sbin/recovery
+service recovery /sbin/recovery
 #service recovery /system/bin/recovery
-service recovery /sbin/start_recovery
-    console
-    oneshot
+#service recovery /sbin/start_recovery
+#    console
+#    oneshot
 
 service adbd /sbin/adbd recovery
     enabled

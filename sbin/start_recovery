@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/sbin/sh
 # mostly replicate updater-script behavior from CWM as update.zip
 
+cd /sbin
 ln -s busybox /sbin/[
 ln -s busybox /sbin/[[
 ln -s recovery /sbin/amend
@@ -9,7 +10,7 @@ ln -s busybox /sbin/awk
 ln -s busybox /sbin/basename
 ln -s busybox /sbin/bbconfig
 ln -s busybox /sbin/bunzip2
-#ln -s recovery /sbin/busybox
+ln -s recovery /sbin/busybox
 ln -s busybox /sbin/bzcat
 ln -s busybox /sbin/bzip2
 ln -s busybox /sbin/cal
@@ -156,9 +157,13 @@ ln -s busybox /sbin/xargs
 ln -s busybox /sbin/yes
 ln -s busybox /sbin/zcat
 
+mv mount.wrapper mount
+chmod 755 mount
+
 # force the sdcard to mount
 mount -t vfat -o rw,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0002,dmask=0002,allow_utime=0020,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro "`cat /voodoo/run/sdcard_device`" /sdcard
 ' > /sbin/postrecoveryboot.sh
 
 # run the actual recovery
-exec /sbin/recovery
+#exec /sbin/recovery
+/sbin/recovery &
